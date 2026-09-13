@@ -24,7 +24,7 @@ const msalInterceptorConfig: MsalInterceptorConfiguration = {
   interactionType: InteractionType.Redirect,
 
   protectedResourceMap: new Map([
-    // Quitado '/*' para que MSAL haga matching correcto con todas las sub-rutas de AWS
+    // Asegúrate de que environment.azure.api.url contenga '/api' al final
     [environment.azure.api.url, [environment.azure.api.scope]],
   ]),
 };
@@ -47,7 +47,8 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         interactionType: InteractionType.Redirect,
         authRequest: {
-          scopes: ['openid', 'profile'],
+          // CORRECCIÓN: Se añade el scope de la API personalizada para solicitar el token correcto desde el inicio
+          scopes: ['openid', 'profile', environment.azure.api.scope],
         },
       },
     },

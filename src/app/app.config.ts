@@ -24,10 +24,11 @@ const msalInterceptorConfig: MsalInterceptorConfiguration = {
   interactionType: InteractionType.Redirect,
 
   protectedResourceMap: new Map([
-    // Asegúrate de usar la variable actualizada
-    [`${environment.azure.api.url}/*`, [environment.azure.api.scope]],
+    // Quitado '/*' para que MSAL haga matching correcto con todas las sub-rutas de AWS
+    [environment.azure.api.url, [environment.azure.api.scope]],
   ]),
 };
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

@@ -10,7 +10,7 @@ export class ApiService {
   private http = inject(HttpClient);
 
   obtenerOrdenes(): Observable<any> {
-    // Apunta exactamente a la ruta /v1/ordenes de AWS API Gateway
-    return this.http.get(`${environment.azure.api.url}/v1/ordenes`);
-  }
+  // Apunta a la ruta real configurada en AWS API Gateway
+  return this.http.get(`${environment.azure.api.url}/api/orders`);
+}
 }

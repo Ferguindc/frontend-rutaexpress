@@ -23,9 +23,9 @@ import { environment } from '../environments/environment';
 const msalInterceptorConfig: MsalInterceptorConfiguration = {
   interactionType: InteractionType.Redirect,
 
-  protectedResourceMap: new Map([
-    // Asegúrate de que environment.azure.api.url contenga '/api' al final
-    [environment.azure.api.url, [environment.azure.api.scope]],
+ protectedResourceMap: new Map([
+    // Le agregamos '/*' para que intercepte cualquier subruta que empiece por /desarrollo/
+    [`${environment.azure.api.url}/*`, [environment.azure.api.scope]],
   ]),
 };
 

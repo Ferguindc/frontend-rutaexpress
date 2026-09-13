@@ -17,7 +17,7 @@ export const environment = {
         'api://20d1c6a6-0709-469d-9cf8-a8a09af6de0b/access_as_user2',
 
       // AGREGAMOS /api AL FINAL DE LA URL
-      url: 'https://w0fjqef3m3.execute-api.us-east-1.amazonaws.com/desarrollo/api',
+      url: 'https://w0fjqef3m3.execute-api.us-east-1.amazonaws.com/desarrollo',
     },
   },
 };

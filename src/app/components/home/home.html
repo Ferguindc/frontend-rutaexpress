@@ -1,0 +1,74 @@
+<div class="home-container">
+  <h1>Bienvenido a RutaExpress</h1>
+
+  <!-- Información del Usuario -->
+  <div class="user-card">
+    <p><strong>Usuario:</strong> {{ account?.username }}</p>
+    <p><strong>Nombre:</strong> {{ account?.name }}</p>
+    <p>
+      <strong>Rol asignado:</strong> 
+      <span *ngIf="authService.isAdmin()" class="badge badge-admin">ADMINISTRADOR</span>
+      <span *ngIf="authService.isCliente()" class="badge badge-cliente">CLIENTE</span>
+      
+      <!-- Si no coincide con Admin ni Cliente, muestra el rol exacto recibido de Azure -->
+      <span *ngIf="!authService.isAdmin() && !authService.isCliente()">
+        {{ authService.getRoles().join(', ') || 'Cargando o Sin Rol Asignado' }}
+      </span>
+    </p>
+  </div>
+
+  <hr />
+
+  <!-- MÓDULOS DEL SISTEMA SEGÚN ROL (CASO 3: RUTAEXPRESS) -->
+  <h2>Módulos del Sistema</h2>
+
+  <!-- Vista para ADMINISTRADOR -->
+  <div *ngIf="authService.isAdmin()" class="modules-grid">
+    <div class="card">
+      <h3>📊 Dashboard</h3>
+      <p>Métricas operacionales y capacidad global de transporte.</p>
+    </div>
+    <div class="card">
+      <h3>📦 Gestión de Envíos</h3>
+      <p>Administrar, aceptar pedidos y cambiar estados de ruta.</p>
+    </div>
+    <div class="card">
+      <h3>🚚 Catálogo y Capacidad</h3>
+      <p>Configuración de tarifas, servicios y límites de flota.</p>
+    </div>
+  </div>
+
+  <!-- Vista para CLIENTE -->
+  <div *ngIf="authService.isCliente()" class="modules-grid">
+    <div class="card">
+      <h3>📊 Dashboard</h3>
+      <p>Resumen general de tus solicitudes y entregas.</p>
+    </div>
+    <div class="card">
+      <h3>📦 Mis Envíos</h3>
+      <p>Crear nuevos envíos y hacer seguimiento en línea.</p>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- SECCIÓN DE PRUEBAS API BACKEND -->
+  <h2>API Backend</h2>
+  
+  <div class="actions">
+    <button class="btn btn-secondary" (click)="probarApi()" [disabled]="cargando()">
+      {{ cargando() ? 'Cargando...' : 'Probar API protegida' }}
+    </button>
+    <button class="btn btn-outline" (click)="logout()">Cerrar sesión</button>
+  </div>
+
+  <!-- Muestra de Respuestas / Errores de la API -->
+  <div *ngIf="mensajeApi" class="api-response success">
+    <h4>Respuesta de la API:</h4>
+    <pre>{{ mensajeApi }}</pre>
+  </div>
+
+  <div *ngIf="errorApi" class="api-response error">
+    <p><strong>{{ errorApi }}</strong></p>
+  </div>
+</div>

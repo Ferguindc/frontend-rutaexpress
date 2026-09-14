@@ -20,12 +20,12 @@ import { routes } from './app.routes';
 import { MSALInstanceFactory } from './factories/msal-instance.factory';
 import { environment } from '../environments/environment';
 
+// Configuración del Interceptor de MSAL
 const msalInterceptorConfig: MsalInterceptorConfiguration = {
   interactionType: InteractionType.Redirect,
-
- protectedResourceMap: new Map([
-    // Le agregamos '/*' para que intercepte cualquier subruta que empiece por /desarrollo/
-    [`${environment.azure.api.url}/*`, [environment.azure.api.scope]],
+  protectedResourceMap: new Map([
+    // Se elimina el '/*' final. MSAL intercepta por coincidencia de prefijo (URL base).
+    [environment.azure.api.url, [environment.azure.api.scope]],
   ]),
 };
 
@@ -47,7 +47,6 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         interactionType: InteractionType.Redirect,
         authRequest: {
-          // CORRECCIÓN: Se añade el scope de la API personalizada para solicitar el token correcto desde el inicio
           scopes: ['openid', 'profile', environment.azure.api.scope],
         },
       },
